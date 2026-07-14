@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parametric Photographic Chassis CAD</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div id="headerRow">
+            <div>
+                <h1 data-i18n="app.title">Photographic Chassis CAD</h1>
+                <p data-i18n="app.subtitle">Parametric generator for laser-cut camera chassis — 4-layer sandwich</p>
+            </div>
+            <button id="btnLang" title="Switch to Portuguese">PT</button>
+        </div>
+    </header>
+
+    <div id="app">
+        <!-- LEFT: Parameter Panel -->
+        <aside id="sidebar">
+            <section class="panel">
+                <h2 data-i18n="section.cameraProfile">Camera Profile</h2>
+                <label><span data-i18n="label.profile">Profile</span>
+                    <select id="cameraProfile">
+                        <option value="custom" data-i18n="profile.custom">Custom</option>
+                        <option value="180x240" data-i18n="profile.180x240">180&times;240 European</option>
+                        <option value="4x5" data-i18n="profile.4x5">4&times;5 Large Format</option>
+                        <option value="5x7" data-i18n="profile.5x7">5&times;7 Large Format</option>
+                        <option value="8x10" data-i18n="profile.8x10">8&times;10 Large Format</option>
+                    </select>
+                </label>
+            </section>
+
+            <section class="panel">
+                <h2 data-i18n="section.outsideDimensions">Outside Dimensions</h2>
+                <label><span data-i18n="label.width">Width (mm)</span>
+                    <input type="number" id="outW" value="140" min="20" max="500" step="0.5">
+                </label>
+                <label><span data-i18n="label.height">Height (mm)</span>
+                    <input type="number" id="outH" value="200" min="20" max="500" step="0.5">
+                </label>
+            </section>
+
+            <section class="panel">
+                <h2 data-i18n="section.filmGate">Film Gate / Glass</h2>
+                <label><span data-i18n="label.width">Width (mm)</span>
+                    <input type="number" id="glassW" value="130" min="10" max="500" step="0.5">
+                </label>
+                <label><span data-i18n="label.height">Height (mm)</span>
+                    <input type="number" id="glassH" value="180" min="10" max="500" step="0.5">
+                </label>
+                <label><span data-i18n="label.thickness">Thickness (mm)</span>
+                    <input type="number" id="glassT" value="2" min="0.5" max="10" step="0.5">
+                </label>
+                <label><span data-i18n="label.glassSeparation">Glass Separation (mm)</span>
+                    <input type="number" id="glassSep" value="1" min="0" max="5" step="0.5">
+                </label>
+            </section>
+
+            <section class="panel">
+                <h2 data-i18n="section.flange">Flange</h2>
+                <label><span data-i18n="label.flangeWidth">Width (mm)</span>
+                    <input type="number" id="flangeW" value="3" min="1" max="20" step="0.5">
+                </label>
+                <label><span data-i18n="label.flangeThickness">Thickness (mm)</span>
+                    <input type="number" id="flangeT" value="2" min="0.5" max="10" step="0.5">
+                </label>
+            </section>
+
+            <section class="panel">
+                <h2 data-i18n="section.spacer">Spacer (with magnets)</h2>
+                <label><span data-i18n="label.spacerMargin">Margin from outer edge (mm)</span>
+                    <input type="number" id="spacerMargin" value="1.5" min="0" max="20" step="0.5">
+                </label>
+            </section>
+
+            <section class="panel">
+                <h2 data-i18n="section.darkslide">Darkslide Channel (U-Frame)</h2>
+                <label><span data-i18n="label.sideRail">Side Rail (mm)</span>
+                    <input type="number" id="dsSideRail" value="16.1" min="3" max="40" step="0.1">
+                </label>
+                <label><span data-i18n="label.bottomRail">Bottom Rail (mm)</span>
+                    <input type="number" id="dsBottomRail" value="21.7" min="3" max="40" step="0.1">
+                </label>
+                <label><span data-i18n="label.plateThickness">Plate Thickness (mm)</span>
+                    <input type="number" id="dsT" value="0.5" min="0.1" max="5" step="0.1">
+                </label>
+                <label><span data-i18n="label.plateClearance">Plate Clearance (mm)</span>
+                    <input type="number" id="dsClearance" value="0.5" min="0" max="3" step="0.1">
+                </label>
+            </section>
+
+            <section class="panel">
+                <h2 data-i18n="section.fingerPull">Back Panel — Finger Pull</h2>
+                <label><span data-i18n="label.pullWidth">Pull Width (mm)</span>
+                    <input type="number" id="pullW" value="30" min="10" max="80" step="1">
+                </label>
+                <label><span data-i18n="label.pullDepth">Pull Depth (mm)</span>
+                    <input type="number" id="pullD" value="8" min="3" max="30" step="0.5">
+                </label>
+            </section>
+
+            <section class="panel">
+                <h2 data-i18n="section.material">Material</h2>
+                <label><span data-i18n="label.sheetMaterial">Sheet Material</span>
+                    <select id="material">
+                        <option value="plywood1" data-i18n="material.plywood1">Birch Plywood 1mm</option>
+                        <option value="plywood2" selected data-i18n="material.plywood2">Birch Plywood 2mm</option>
+                        <option value="plywood3" data-i18n="material.plywood3">Birch Plywood 3mm</option>
+                        <option value="pvc2" data-i18n="material.pvc2">PVC 2mm</option>
+                        <option value="aluminium05" data-i18n="material.aluminium05">Aluminium 0.5mm</option>
+                        <option value="carbon1" data-i18n="material.carbon1">Carbon Fibre 1mm</option>
+                    </select>
+                </label>
+            </section>
+
+            <section class="panel">
+                <h2 data-i18n="section.kerf">Laser / Kerf</h2>
+                <label><span data-i18n="label.kerf">Kerf (mm)</span>
+                    <input type="number" id="kerf" value="0.12" min="0" max="2" step="0.01">
+                </label>
+                <label><span data-i18n="label.kerfComp">Kerf Compensation</span>
+                    <select id="kerfComp">
+                        <option value="none" data-i18n="kerf.none">None</option>
+                        <option value="inside" selected data-i18n="kerf.inside">Inside cuts</option>
+                        <option value="outside" data-i18n="kerf.outside">Outside cuts</option>
+                        <option value="both" data-i18n="kerf.both">Both</option>
+                    </select>
+                </label>
+            </section>
+
+            <section class="panel">
+                <h2 data-i18n="section.lightTrap">Light Trap</h2>
+                <label><span data-i18n="label.ltDepth">Depth (mm)</span>
+                    <input type="number" id="ltDepth" value="3" min="1" max="20" step="0.5">
+                </label>
+                <label><span data-i18n="label.ltWidth">Width (mm)</span>
+                    <input type="number" id="ltWidth" value="2" min="0.5" max="10" step="0.5">
+                </label>
+            </section>
+
+            <section class="panel">
+                <h2 data-i18n="section.magnets">Magnets</h2>
+                <label><span data-i18n="label.magDiameter">Diameter (mm)</span>
+                    <input type="number" id="magD" value="6" min="2" max="20" step="0.5">
+                </label>
+                <label><span data-i18n="label.magCount">Count</span>
+                    <input type="number" id="magCount" value="4" min="0" max="20" step="1">
+                </label>
+            </section>
+
+            <section class="panel">
+                <h2 data-i18n="section.partToDraw">Part to Draw</h2>
+                <label>
+                    <select id="partSelect">
+                        <option value="all" data-i18n="part.all">All 4 Layers + Plate</option>
+                        <option value="sandwich" data-i18n="part.sandwich">Sandwich View (Cross-section)</option>
+                        <option value="front" data-i18n="part.front">Front Frame</option>
+                        <option value="uframe" data-i18n="part.uframe">Darkslide U-Frame</option>
+                        <option value="spacer" data-i18n="part.spacer">Spacer</option>
+                        <option value="back" data-i18n="part.back">Back Panel</option>
+                        <option value="darkslide" data-i18n="part.darkslide">Darkslide Plate</option>
+                    </select>
+                </label>
+            </section>
+
+            <div id="actions">
+                <button id="btnRefresh" data-i18n="btn.refresh">Refresh Preview</button>
+                <button id="btnExportSVG" data-i18n="btn.exportSVG">Export SVG</button>
+                <button id="btnExportDXF" data-i18n="btn.exportDXF">Export DXF</button>
+                <button id="btnExportPDF" data-i18n="btn.exportPDF">Export PDF</button>
+                <button id="btnBOM" data-i18n="btn.bom">Bill of Materials</button>
+            </div>
+        </aside>
+
+        <!-- RIGHT: SVG Preview -->
+        <main id="preview">
+            <div id="svgContainer"></div>
+        </main>
+    </div>
+
+    <!-- BOM Modal -->
+    <div id="bomModal" class="modal hidden">
+        <div class="modal-content">
+            <h2 data-i18n="bom.title">Bill of Materials</h2>
+            <div id="bomTable"></div>
+            <button id="btnCloseBOM" data-i18n="bom.close">Close</button>
+        </div>
+    </div>
+
+    <!-- Scripts (order matters: deps first) -->
+    <script src="parameters.js"></script>
+    <script src="camera_profiles.js"></script>
+    <script src="materials.js"></script>
+    <script src="geometry.js"></script>
+    <script src="kerf.js"></script>
+    <script src="joints.js"></script>
+    <script src="svg.js"></script>
+    <script src="lighttrap.js"></script>
+    <script src="darkslide.js"></script>
+    <script src="magnets.js"></script>
+    <script src="bom.js"></script>
+    <script src="i18n.js"></script>
+    <script src="export_svg.js"></script>
+    <script src="export_dxf.js"></script>
+    <script src="export_pdf.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
